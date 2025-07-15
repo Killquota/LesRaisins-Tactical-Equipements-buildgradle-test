@@ -75,6 +75,8 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         client2 {
@@ -91,7 +93,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run_server')
-
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.enabledGameTestNamespaces', mod_id
         }
 
@@ -122,6 +125,10 @@ mixin {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+        }
     maven {
         url = "https://api.modrinth.com/maven"
     }
@@ -172,6 +179,7 @@ dependencies {
     compileOnly('org.apache.bcel:bcel:6.6.1')
 
     implementation fg.deobf("curse.maven:playeranimator-658587:4587214")
+    implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_anim}")
 
     // 测试用mod
     // 按键显示
